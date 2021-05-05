@@ -9,7 +9,7 @@ from feature_class_punctuation import PunctFeatures
 
 def main():
     text = ["hello, world!","My name is Alice.","Humpty Dumpty had a great fall."]
-    punct_features = PunctFeatures(text).count_punctuation()
+    punct_features = PunctFeatures(text).outputter()
     print(punct_features)
 
 if __name__ == '__main__':
