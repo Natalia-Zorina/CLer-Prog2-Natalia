@@ -13,6 +13,7 @@ class DataIterator:
         self.data = data
         self.i = 0
         self.max_repeats = max_repeats
+        self.reader = csv.DictReader(open(self.data, mode='r'))
 
     def __iter__(self):
         return self
@@ -20,12 +21,10 @@ class DataIterator:
     def __next__(self):
         if self.i >= self.max_repeats:
             raise StopIteration()
-        with open(self.data, mode='r') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for line in reader:
-                i = self.i
-                self.i += 1
-                return (i, line.get("comment_text"), line.get("label"))
+        for line in self.reader:
+            i = self.i
+            self.i += 1
+            return (i, line.get("comment_text"), line.get("label"))
 
     def generator(self):
         with open(self.data, mode='r') as csv_file:

@@ -5,7 +5,24 @@ Created on Wed Apr 14 18:49:49 2021
 
 @author: Natasha
 """
+from os import path, remove  
+import logging
+import logging.config
 from abstract_feature_class import AllFeatures
+
+if path.isfile("logging_punct_features.log"):  
+        remove("logging_punct_features.log")  
+    
+logger = logging.getLogger(__name__)  
+logger.setLevel(logging.DEBUG)  
+
+logger_handler = logging.FileHandler('logging_punct_features.log')  
+logger_handler.setLevel(logging.DEBUG)  
+
+logger_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s') 
+logger_handler.setFormatter(logger_formatter) 
+
+logger.addHandler(logger_handler)  
 
 class PunctFeatures(AllFeatures):
 
@@ -20,6 +37,7 @@ class PunctFeatures(AllFeatures):
         features.append(counter_commas)
         features.append(counter_dots)
         features.append(counter_question_marks)
+        logger.debug('Counting punctuation feature')
         return features
 
     @staticmethod
@@ -31,6 +49,7 @@ class PunctFeatures(AllFeatures):
             else:
                 c == 0.0
             feature_norm.append(c)
+        logger.debug('Normalizing feature')    
         return feature_norm
     
     def outputter(self):
@@ -39,4 +58,5 @@ class PunctFeatures(AllFeatures):
             features = self.count_punctuation(c)
             features_norm = self.normalize(features, len(c))
             liste_output.append(features_norm)
+        logger.debug('Creating right output')    
         return liste_output
