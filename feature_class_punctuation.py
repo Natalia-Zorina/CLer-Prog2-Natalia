@@ -9,6 +9,7 @@ from os import path, remove
 import logging
 import logging.config
 from abstract_feature_class import AllFeatures
+import pandas as pd
 
 if path.isfile("logging_punct_features.log"):  
         remove("logging_punct_features.log")  
@@ -38,7 +39,7 @@ class PunctFeatures(AllFeatures):
         features.append(counter_dots)
         features.append(counter_question_marks)
         logger.debug('Counting punctuation feature')
-        return features
+        return pd.Series(features)
 
     @staticmethod
     def normalize(features, length):
@@ -53,10 +54,11 @@ class PunctFeatures(AllFeatures):
         return feature_norm
     
     def outputter(self):
-        liste_output = []
-        for c in self.text:
-            features = self.count_punctuation(c)
-            features_norm = self.normalize(features, len(c))
-            liste_output.append(features_norm)
-        logger.debug('Creating right output')    
-        return liste_output
+        df = self.text
+        df[['number_commas', 'number_dots', "number_question_marks"]] = df['text'].apply(self.count_punctuation)
+        df['text_length'] = df['text'].str.len()
+        df['number_commas'] = df['number_commas'] / df['text_length']
+        df['number_dots'] = df['number_dots'] / df['text_length']
+        df['number_question_marks'] = df['number_question_marks'] / df['text_length']
+        logger.debug('Creating data frame with features')    
+        return df

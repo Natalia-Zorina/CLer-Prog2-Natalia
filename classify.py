@@ -5,7 +5,8 @@ Created on Mon Apr 26 17:53:48 2021
 
 @author: Natasha
 """
-from os import path, remove  
+from os import path, remove
+import pandas as pd
 import logging
 import logging.config
 from feature_class_punctuation import PunctFeatures
@@ -26,9 +27,10 @@ def main():
     logger.addHandler(logger_handler)  
     
     text = ["hello, world!","My name is Alice.","Humpty Dumpty had a great fall."]
-    punct_features = PunctFeatures(text).outputter()
+    data_frame = pd.DataFrame(text, columns=['text'])
+    punct_features = PunctFeatures(data_frame).outputter()
+    punct_features.to_csv("PunctFeatures.csv")
     logger.debug(punct_features)
 
 if __name__ == '__main__':
     main()
-  
