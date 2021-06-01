@@ -10,6 +10,7 @@ import logging
 import logging.config
 from abstract_feature_class import AllFeatures
 import pandas as pd
+from decorators import debug
 
 if path.isfile("logging_punct_features.log"):  
         remove("logging_punct_features.log")  
@@ -29,7 +30,8 @@ class PunctFeatures(AllFeatures):
 
     def __init__(self, text):
         self.text = text
-
+        
+    @debug    
     def count_punctuation(self, text):
         features = []
         counter_commas = text.count(",")
@@ -42,6 +44,7 @@ class PunctFeatures(AllFeatures):
         return pd.Series(features)
 
     @staticmethod
+    @debug
     def normalize(features, length):
         feature_norm = []
         for c in features:
@@ -53,6 +56,7 @@ class PunctFeatures(AllFeatures):
         logger.debug('Normalizing feature')    
         return feature_norm
     
+    @debug
     def outputter(self):
         df = self.text
         df[['number_commas', 'number_dots', "number_question_marks"]] = df['text'].apply(self.count_punctuation)
