@@ -11,7 +11,7 @@ from feature_class_punctuation import PunctFeatures
 
 def main():
     
-    DATAPATH = "/Users/Natasha/Универ/Sommersemester 21/Prog 2/Data_train.csv"
+    DATAPATH = "/Users/Natasha/Library/Mobile Documents/com~apple~CloudDocs/Универ/Sommersemester 21/Prog 2/DATA/Data_train.csv"
     df = pd.read_csv(DATAPATH, usecols=('ID', 'text', 'label'))
     data_with_features = PunctFeatures(df).outputter()
     data_with_features.to_csv("Data_train_features.csv")
