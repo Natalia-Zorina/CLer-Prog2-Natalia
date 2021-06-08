@@ -5,7 +5,7 @@ Created on Tue May 11 19:20:20 2021
 
 @author: Natasha
 """
-import csv 
+import csv
 
 class DataIterator:
 
@@ -44,7 +44,7 @@ def main():
     print(next(i))
     print(next(i))
     print(next(i))
-    
+
     g = data_iterator.generator()
     print(next(g))
     print(next(g))

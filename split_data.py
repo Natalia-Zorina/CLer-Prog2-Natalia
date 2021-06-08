@@ -18,7 +18,7 @@ def split_data(data):
 
 def main():
     
-    DATAPATH = "/Users/Natasha/Универ/Sommersemester 21/irony-labeled.csv"
+    DATAPATH = "/Users/Natasha/Library/Mobile Documents/com~apple~CloudDocs/Универ/Sommersemester 21/Prog 2/DATA/irony-labeled.csv"
     data = preprocess(DATAPATH)
     split_data(data)
 
