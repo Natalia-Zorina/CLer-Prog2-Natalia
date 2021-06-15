@@ -18,13 +18,17 @@ ledeglich eine neue Spalte mit dem neuen Feature hinzugefügt.
 """
 
 import pandas as pd
+import click
 from feature_class_punctuation import PunctFeatures
 from Word_features import count_stopwords
 
-def main():
-    
-    DATAPATH = "/Users/Natasha/Library/Mobile Documents/com~apple~CloudDocs/Универ/Sommersemester 21/Prog 2/DATA/Data_train.csv"
-    df = pd.read_csv(DATAPATH, usecols=('ID', 'text', 'label'))
+#übergebe file Data_train.csv
+@click.command()
+@click.argument('data', required=True)
+
+def main(data):
+
+    df = pd.read_csv(data, usecols=('ID', 'text', 'label'))
     data_with_features = PunctFeatures(df).outputter()
     data_with_features['number_stopwords'] = data_with_features['text'].apply(count_stopwords)
     data_with_features['number_stopwords'] = data_with_features['number_stopwords'] / data_with_features['text_length']
